@@ -10,15 +10,18 @@ interface SearchResult {
   url: string;
 }
 
-interface Data {
+export interface Data {
   webPages: {
     totalEstimatedMatches: number;
-    value: SearchResult;
+    value: SearchResult[];
   };
 }
 
 export interface Methods {
   get: {
+    query?: {
+      q: string;
+    };
     resBody: Data;
   };
 }

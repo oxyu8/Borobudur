@@ -23,6 +23,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "api:build": "aspida",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

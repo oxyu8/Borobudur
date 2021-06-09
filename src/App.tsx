@@ -1,28 +1,40 @@
 import React, { useState } from "react";
-import axios from "axios";
+import aspida from "@aspida/axios";
+import api from "./shared/api/$api";
 import "./styles/index.css";
+import { Data } from "./shared/api/v7.0/search/index";
 
 function App() {
-  const [searchResults, setSearchResults] = useState([]);
-  const ENDPOINT = "https://api.bing.microsoft.com/v7.0/search";
+  const [query, setQuery] = useState<string>("");
+  const [searchResults, setSearchResults] =
+    useState<Data["webPages"]["value"]>();
+
+  const changeQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
+  };
 
   const fetchSearchResults = async () => {
+    const client = api(aspida());
     const params = {
-      q: "遺伝子組み替え",
+      q: query,
     };
     const headers = {
       "Content-Type": "application/json",
       "Ocp-Apim-Subscription-Key": process.env.REACT_APP_BING_APY_KEY,
     };
-    const res = await axios.get(ENDPOINT, { params, headers });
-    setSearchResults(res.data.webPages.value);
-    console.log(res);
+    const res = await client.v7_0.search.get({
+      query: params,
+      config: { headers },
+    });
+    setSearchResults(res.body.webPages.value);
   };
 
   return (
     <>
       <div style={{ display: "flex", flexDirection: "row" }}>
         <input
+          value={query}
+          onChange={changeQuery}
           style={{
             width: 500,
             height: 35,
