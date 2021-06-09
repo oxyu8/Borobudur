@@ -4,13 +4,25 @@ import api from "./shared/api/$api";
 import "./styles/index.css";
 import { SearchResultCard } from "./components/SearchResultCard";
 import { SearchResult } from "./shared/types";
+import { useStopwatch } from "./hooks/useStopwatch";
 
 function App() {
   const [query, setQuery] = useState<string>("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const { isRunning, elapsedTime, startTimer, stopTimer } = useStopwatch();
 
   const changeQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
+  };
+
+  const convertSec2Min = () => {
+    const min = Math.floor(elapsedTime / 60);
+    const sec = elapsedTime % 60;
+
+    return {
+      min,
+      sec,
+    };
   };
 
   const fetchSearchResults = async () => {
@@ -32,6 +44,19 @@ function App() {
   };
   return (
     <>
+      <div
+        style={{
+          width: 300,
+          height: 300,
+          border: "solid",
+          borderColor: "grey",
+          borderWidth: 1,
+          position: "absolute",
+          right: 0,
+        }}
+      >
+        質問がここにくる
+      </div>
       <div style={{ display: "flex", flexDirection: "row" }}>
         <input
           value={query}
@@ -51,6 +76,16 @@ function App() {
           >
             検索
           </button>
+        </div>
+        <div>
+          {convertSec2Min().min}
+          {"分"}
+          {convertSec2Min().sec}
+          {"秒"}
+        </div>
+        <div>
+          <button onClick={startTimer}>start</button>
+          <button onClick={stopTimer}>stop</button>
         </div>
       </div>
       {searchResults &&
