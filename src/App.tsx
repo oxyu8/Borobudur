@@ -7,7 +7,7 @@ import { SearchResult } from "./shared/types";
 
 function App() {
   const [query, setQuery] = useState<string>("");
-  const [searchResults, setSearchResults] = useState<SearchResult[]>();
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
 
   const changeQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
@@ -22,13 +22,14 @@ function App() {
       "Content-Type": "application/json",
       "Ocp-Apim-Subscription-Key": process.env.REACT_APP_BING_APY_KEY,
     };
+    //TODO: error handling
     const res = await client.v7_0.search.get({
       query: params,
       config: { headers },
     });
-    setSearchResults(res.body.webPages.value);
+    const searchResults = res.body.webPages.value;
+    setSearchResults(searchResults);
   };
-
   return (
     <>
       <div style={{ display: "flex", flexDirection: "row" }}>
