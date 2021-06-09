@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import aspida from "@aspida/axios";
 import api from "./shared/api/$api";
 import "./styles/index.css";
-import { Data } from "./shared/api/v7.0/search/index";
+import { SearchResultCard } from "./components/SearchResultCard";
+import { SearchResult } from "./shared/types";
 
 function App() {
   const [query, setQuery] = useState<string>("");
-  const [searchResults, setSearchResults] =
-    useState<Data["webPages"]["value"]>();
+  const [searchResults, setSearchResults] = useState<SearchResult[]>();
 
   const changeQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
@@ -52,26 +52,10 @@ function App() {
           </button>
         </div>
       </div>
-      {/* @ts-ignore */}
       {searchResults &&
         searchResults.map((searchResult) => {
           return (
-            <>
-              <div style={{ height: 20 }}></div>
-              <div style={{ width: 600 }}>
-                <div style={{ color: "#6ac46a" }}>
-                  https://www.maff.go.jp/j/syouan/nouan/carta/kiso_joho/...
-                </div>
-                <div
-                  style={{ fontSize: 20, color: "#1A0DAB", fontWeight: "bold" }}
-                >
-                  {/* @ts-ignore */}
-                  {searchResult.name}
-                </div>
-                {/* @ts-ignore */}
-                <div>{searchResult.snippet}</div>
-              </div>
-            </>
+            <SearchResultCard key={searchResult.id} result={searchResult} />
           );
         })}
     </>
