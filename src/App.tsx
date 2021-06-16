@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import aspida from "@aspida/axios";
 import api from "./shared/api/$api";
 import "./styles/index.css";
@@ -9,7 +9,31 @@ import { useStopwatch } from "./hooks/useStopwatch";
 function App() {
   const [query, setQuery] = useState<string>("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [question, setQuestion] = useState<string>("");
   const { isRunning, elapsedTime, startTimer, stopTimer } = useStopwatch();
+
+  useEffect(() => {
+    switch (elapsedTime) {
+      case 5:
+        setQuestion("遺伝子組み換えと品種改良の違いは？");
+        break;
+      case 10:
+        setQuestion("遺伝子組み換えの歴史");
+        break;
+      case 15:
+        setQuestion("遺伝子組み換えは環境に影響をあたえるのか");
+        break;
+      case 20:
+        setQuestion("遺伝子組み換えは経済に影響を与えるのか");
+        break;
+      case 25:
+        setQuestion("遺伝子組み換えの必要性について考えてみよう");
+        break;
+      case 30:
+        setQuestion("遺伝子組み換えの安全性");
+        break;
+    }
+  }, [elapsedTime]);
 
   const changeQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
@@ -46,18 +70,18 @@ function App() {
     <>
       <div
         style={{
-          width: 300,
-          height: 300,
+          width: 400,
+          height: 500,
           border: "solid",
           borderColor: "grey",
           borderWidth: 1,
           position: "absolute",
-          right: 0,
+          right: 200,
         }}
       >
-        質問がここにくる
+        <div style={{ fontSize: 30 }}>{question}</div>
       </div>
-      <div style={{ marginLeft: 200 }}>
+      <div style={{ marginLeft: 200, marginTop: 30 }}>
         <div style={{ display: "flex", flexDirection: "row" }}>
           <input
             value={query}
