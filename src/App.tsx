@@ -57,43 +57,45 @@ function App() {
       >
         質問がここにくる
       </div>
-      <div style={{ display: "flex", flexDirection: "row" }}>
-        <input
-          value={query}
-          onChange={changeQuery}
-          style={{
-            width: 500,
-            height: 35,
-            fontSize: 18,
-            paddingLeft: 5,
-            paddingRight: 5,
-          }}
-        />
-        <div>
-          <button
-            style={{ width: 60, height: 40 }}
-            onClick={fetchSearchResults}
-          >
-            検索
-          </button>
+      <div style={{ marginLeft: 200 }}>
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          <input
+            value={query}
+            onChange={changeQuery}
+            style={{
+              width: 500,
+              height: 35,
+              fontSize: 18,
+              paddingLeft: 5,
+              paddingRight: 5,
+            }}
+          />
+          <div>
+            <button
+              style={{ width: 60, height: 40 }}
+              onClick={fetchSearchResults}
+            >
+              検索
+            </button>
+          </div>
+          <div>
+            {convertSec2Min().min}
+            {"分"}
+            {convertSec2Min().sec}
+            {"秒"}
+          </div>
+          <div>
+            <button onClick={startTimer}>start</button>
+            <button onClick={stopTimer}>stop</button>
+          </div>
         </div>
-        <div>
-          {convertSec2Min().min}
-          {"分"}
-          {convertSec2Min().sec}
-          {"秒"}
-        </div>
-        <div>
-          <button onClick={startTimer}>start</button>
-          <button onClick={stopTimer}>stop</button>
-        </div>
+        {searchResults &&
+          searchResults.map((searchResult) => {
+            return (
+              <SearchResultCard key={searchResult.id} result={searchResult} />
+            );
+          })}
       </div>
-      {searchResults &&
-        searchResults.map((searchResult) => {
-          return (
-            <SearchResultCard key={searchResult.id} result={searchResult} />
-          );
-        })}
     </>
   );
 }
