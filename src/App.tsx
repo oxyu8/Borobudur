@@ -68,7 +68,7 @@ function App() {
   };
   return (
     <>
-      <div
+      {/* <div
         style={{
           width: 400,
           height: 500,
@@ -80,7 +80,7 @@ function App() {
         }}
       >
         <div style={{ fontSize: 30 }}>{question}</div>
-      </div>
+      </div> */}
       <div style={{ marginLeft: 200, marginTop: 30 }}>
         <div style={{ display: "flex", flexDirection: "row" }}>
           <input

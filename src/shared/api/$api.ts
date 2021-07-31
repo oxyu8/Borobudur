@@ -6,7 +6,7 @@ import { Methods as Methods0 } from './v7.0/search'
 
 // prettier-ignore
 const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
-  const prefix = (baseURL === undefined ? 'https://api.bing.microsoft.com' : baseURL).replace(/\/$/, '')
+  const prefix = (baseURL === undefined ? 'https://api.cognitive.microsoft.com/bing' : baseURL).replace(/\/$/, '')
   const PATH0 = '/v7.0/search'
   const GET = 'GET'
 
