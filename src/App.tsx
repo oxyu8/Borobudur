@@ -5,11 +5,16 @@ import "./styles/index.css";
 import { SearchResultCard } from "./components/SearchResultCard";
 import { SearchResult } from "./shared/types";
 import { useStopwatch } from "./hooks/useStopwatch";
+import HelpIcon from "@material-ui/icons/Help";
+import { Button, Box } from "@material-ui/core";
+import { BorderColor } from "@material-ui/icons";
 
 function App() {
   const [query, setQuery] = useState<string>("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [question, setQuestion] = useState<string>("");
+  const [isVisibleQuestionDialog, setIsVisibleQuestionDialog] =
+    useState<boolean>(false);
   const { isRunning, elapsedTime, startTimer, stopTimer } = useStopwatch();
 
   useEffect(() => {
@@ -68,19 +73,6 @@ function App() {
   };
   return (
     <>
-      {/* <div
-        style={{
-          width: 400,
-          height: 500,
-          border: "solid",
-          borderColor: "grey",
-          borderWidth: 1,
-          position: "absolute",
-          right: 200,
-        }}
-      >
-        <div style={{ fontSize: 30 }}>{question}</div>
-      </div> */}
       <div style={{ marginLeft: 200, marginTop: 30 }}>
         <div style={{ display: "flex", flexDirection: "row" }}>
           <input
@@ -102,7 +94,7 @@ function App() {
               検索
             </button>
           </div>
-          <div>
+          {/* <div>
             {convertSec2Min().min}
             {"分"}
             {convertSec2Min().sec}
@@ -111,7 +103,7 @@ function App() {
           <div>
             <button onClick={startTimer}>start</button>
             <button onClick={stopTimer}>stop</button>
-          </div>
+          </div> */}
         </div>
         {searchResults &&
           searchResults.map((searchResult) => {
@@ -119,6 +111,62 @@ function App() {
               <SearchResultCard key={searchResult.id} result={searchResult} />
             );
           })}
+        {isVisibleQuestionDialog && (
+          <div style={{ position: "fixed", top: 600, right: 350 }}>
+            <Box
+              border={1}
+              height={"auto"}
+              width={"400px"}
+              borderRadius="10px"
+              style={{
+                padding: "10px",
+                paddingBottom: "50px",
+                borderBottomRightRadius: "0px",
+              }}
+            >
+              <div style={{ fontSize: "20px", fontWeight: "bold" }}>
+                問いかけ文
+              </div>
+              <div style={{ height: "10px" }}></div>
+              <div
+                style={{
+                  backgroundColor: "#5686FF",
+                  borderTopLeftRadius: "10px",
+                  borderTopRightRadius: "10px",
+                  borderBottomRightRadius: "10px",
+                  padding: "10px",
+                  width: "250px",
+                }}
+              >
+                <div style={{ color: "white" }}>
+                  遺伝子組み換え食品の安全性はどのように担保されていますか?
+                </div>
+              </div>
+              <div style={{ height: "20px" }}></div>
+              <div
+                style={{
+                  backgroundColor: "#5686FF",
+                  borderTopLeftRadius: "10px",
+                  borderTopRightRadius: "10px",
+                  borderBottomRightRadius: "10px",
+                  padding: "10px",
+                  width: "250px",
+                }}
+              >
+                <div style={{ color: "white" }}>
+                  遺伝子組み換え食品は本当に安全であると言えますか？
+                </div>
+              </div>
+            </Box>
+          </div>
+        )}
+        <div style={{ position: "fixed", top: 845, right: 340 }}>
+          <Button
+            onClick={() => setIsVisibleQuestionDialog(!isVisibleQuestionDialog)}
+          >
+            <HelpIcon style={{ color: "#5686FF", fontSize: "50px" }} />
+          </Button>
+        </div>
       </div>
     </>
   );
