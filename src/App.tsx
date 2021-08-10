@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import aspida from "@aspida/axios";
 import api from "./shared/api/$api";
 import "./styles/index.css";
@@ -12,33 +12,9 @@ import { BorderColor } from "@material-ui/icons";
 function App() {
   const [query, setQuery] = useState<string>("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
-  const [question, setQuestion] = useState<string>("");
   const [isVisibleQuestionDialog, setIsVisibleQuestionDialog] =
     useState<boolean>(false);
   const { isRunning, elapsedTime, startTimer, stopTimer } = useStopwatch();
-
-  useEffect(() => {
-    switch (elapsedTime) {
-      case 5:
-        setQuestion("遺伝子組み換えと品種改良の違いは？");
-        break;
-      case 10:
-        setQuestion("遺伝子組み換えの歴史");
-        break;
-      case 15:
-        setQuestion("遺伝子組み換えは環境に影響をあたえるのか");
-        break;
-      case 20:
-        setQuestion("遺伝子組み換えは経済に影響を与えるのか");
-        break;
-      case 25:
-        setQuestion("遺伝子組み換えの必要性について考えてみよう");
-        break;
-      case 30:
-        setQuestion("遺伝子組み換えの安全性");
-        break;
-    }
-  }, [elapsedTime]);
 
   const changeQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
@@ -112,10 +88,10 @@ function App() {
             );
           })}
         {isVisibleQuestionDialog && (
-          <div style={{ position: "fixed", top: 600, right: 350 }}>
+          <div style={{ position: "fixed", top: 650, right: 350 }}>
             <Box
               border={1}
-              height={"auto"}
+              height={"120px"}
               width={"400px"}
               borderRadius="10px"
               style={{
@@ -138,11 +114,11 @@ function App() {
                   width: "250px",
                 }}
               >
-                <div style={{ color: "white" }}>
-                  遺伝子組み換え食品の安全性はどのように担保されていますか?
+                <div style={{ color: "white", fontSize: "18px" }}>
+                  遺伝子組み換え食品の何が問題ですか？
                 </div>
               </div>
-              <div style={{ height: "20px" }}></div>
+              {/* <div style={{ height: "20px" }}></div>
               <div
                 style={{
                   backgroundColor: "#5686FF",
@@ -156,7 +132,7 @@ function App() {
                 <div style={{ color: "white" }}>
                   遺伝子組み換え食品は本当に安全であると言えますか？
                 </div>
-              </div>
+              </div> */}
             </Box>
           </div>
         )}
