@@ -88,10 +88,10 @@ function App() {
             );
           })}
         {isVisibleQuestionDialog && (
-          <div style={{ position: "fixed", top: 650, right: 350 }}>
+          <div style={{ position: "fixed", top: 580, right: 350 }}>
             <Box
               border={1}
-              height={"120px"}
+              height={"160px"}
               width={"400px"}
               borderRadius="10px"
               style={{
@@ -100,7 +100,7 @@ function App() {
                 borderBottomRightRadius: "0px",
               }}
             >
-              <div style={{ fontSize: "20px", fontWeight: "bold" }}>
+              <div style={{ fontSize: "25px", fontWeight: "bold" }}>
                 問いかけ文
               </div>
               <div style={{ height: "10px" }}></div>
@@ -111,11 +111,11 @@ function App() {
                   borderTopRightRadius: "10px",
                   borderBottomRightRadius: "10px",
                   padding: "10px",
-                  width: "250px",
+                  width: "320px",
                 }}
               >
-                <div style={{ color: "white", fontSize: "18px" }}>
-                  遺伝子組み換え食品の何が問題ですか？
+                <div style={{ color: "white", fontSize: "29px" }}>
+                遺伝子組み換えは本当に安全であると言えますか？
                 </div>
               </div>
               {/* <div style={{ height: "20px" }}></div>
@@ -136,7 +136,7 @@ function App() {
             </Box>
           </div>
         )}
-        <div style={{ position: "fixed", top: 845, right: 340 }}>
+        <div style={{ position: "fixed", top: 810, right: 340 }}>
           <Button
             onClick={() => setIsVisibleQuestionDialog(!isVisibleQuestionDialog)}
           >
