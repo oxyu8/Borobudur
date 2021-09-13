@@ -1,13 +1,13 @@
 export interface SearchResult {
-  dateLastCrawled: string;
+  0: number;
+  1: number;
+  2: number;
+  3: number;
+  4: number;
   displayUrl: string;
   id: string;
-  isFamilyFriendly: boolean;
-  isNavigational: boolean;
-  language: string;
   name: string;
   snippet: string;
-  url: string;
 }
 
 export interface BingResBody {
