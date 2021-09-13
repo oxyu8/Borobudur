@@ -11,9 +11,12 @@ export const SearchResultCard: React.FC<Props> = ({ result }) => {
       <div style={{ height: 20 }}></div>
       <div style={{ width: 600 }}>
         <div style={{ color: "#6ac46a" }}>{result.displayUrl}</div>
-        <div style={{ fontSize: 20, color: "#1A0DAB", fontWeight: "bold" }}>
+        <a
+          href={result.displayUrl}
+          style={{ fontSize: 20, color: "#1A0DAB", fontWeight: "bold" }}
+        >
           {result.name}
-        </div>
+        </a>
         <div>{result.snippet}</div>
       </div>
     </div>
