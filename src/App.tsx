@@ -1,50 +1,46 @@
-import React, { useState } from "react";
-import aspida from "@aspida/axios";
-import api from "./shared/api/$api";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "./styles/index.css";
 import { SearchResultCard } from "./components/SearchResultCard";
 import { SearchResult } from "./shared/types";
-import { useStopwatch } from "./hooks/useStopwatch";
 import HelpIcon from "@material-ui/icons/Help";
 import { Button, Box } from "@material-ui/core";
-import { BorderColor } from "@material-ui/icons";
+import { questions } from "./data/questions";
 
 function App() {
   const [query, setQuery] = useState<string>("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [isVisibleQuestionDialog, setIsVisibleQuestionDialog] =
     useState<boolean>(false);
-  const { isRunning, elapsedTime, startTimer, stopTimer } = useStopwatch();
+  const [question, setQuestion] = useState<string>("");
+
+  const [phase, setPhase] = useState<number>(1);
+
+  const THRESHOLD = 0;
+
+  useEffect(() => {
+    setQuestion(questions[phase - 1]);
+  }, [phase]);
+
+  const checkSimilarity = (searchResult: any) => {
+    const similarity = searchResult[phase - 1];
+    if (similarity > THRESHOLD) {
+      const newPhase = phase + 1;
+      setPhase(newPhase);
+    }
+  };
 
   const changeQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
 
-  const convertSec2Min = () => {
-    const min = Math.floor(elapsedTime / 60);
-    const sec = elapsedTime % 60;
-
-    return {
-      min,
-      sec,
-    };
-  };
-
   const fetchSearchResults = async () => {
-    const client = api(aspida());
-    const params = {
-      q: query,
-    };
-    const headers = {
-      "Content-Type": "application/json",
-      "Ocp-Apim-Subscription-Key": process.env.REACT_APP_BING_APY_KEY,
-    };
-    //TODO: error handling
-    const res = await client.v7_0.search.get({
-      query: params,
-      config: { headers },
+    const res = await axios.get("http://localhost:3000/search", {
+      params: {
+        query: query,
+      },
     });
-    const searchResults = res.body.webPages.value;
+    const searchResults = res.data;
     setSearchResults(searchResults);
   };
   return (
@@ -70,16 +66,6 @@ function App() {
               検索
             </button>
           </div>
-          {/* <div>
-            {convertSec2Min().min}
-            {"分"}
-            {convertSec2Min().sec}
-            {"秒"}
-          </div>
-          <div>
-            <button onClick={startTimer}>start</button>
-            <button onClick={stopTimer}>stop</button>
-          </div> */}
         </div>
         {searchResults &&
           searchResults.map((searchResult) => {
@@ -115,24 +101,9 @@ function App() {
                 }}
               >
                 <div style={{ color: "white", fontSize: "29px" }}>
-                遺伝子組み換えは本当に安全であると言えますか？
+                  {question}
                 </div>
               </div>
-              {/* <div style={{ height: "20px" }}></div>
-              <div
-                style={{
-                  backgroundColor: "#5686FF",
-                  borderTopLeftRadius: "10px",
-                  borderTopRightRadius: "10px",
-                  borderBottomRightRadius: "10px",
-                  padding: "10px",
-                  width: "250px",
-                }}
-              >
-                <div style={{ color: "white" }}>
-                  遺伝子組み換え食品は本当に安全であると言えますか？
-                </div>
-              </div> */}
             </Box>
           </div>
         )}
